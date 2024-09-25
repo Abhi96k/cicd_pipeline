@@ -23,8 +23,8 @@ jobs:
 
     # Step 3: Build the Docker image
     - name: Build the Docker image
-      run: docker build -t $DOCKER_USERNAME/cicd-pipeline .
+      run: docker build -t abhi96k/cicd-pipeline .
 
     # Step 4: Push the Docker image to DockerHub
     - name: Push to DockerHub
-      run: docker push $DOCKER_USERNAME/cicd-pipeline:latest
+      run: docker push abhi96k/cicd-pipeline:latest
