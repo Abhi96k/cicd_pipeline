@@ -2,13 +2,13 @@ name: CD Pipeline
 
 on:
   workflow_run:
-    workflows: ["Docker Image CI"] # This must match the name in ci.yml
+    workflows: ["Docker Image CI"]
     types:
       - completed
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest  # Use GitHub-hosted runner
 
     steps:
       # Step 1: Pull the Docker image
@@ -20,5 +20,4 @@ jobs:
         run: sudo docker rm -f cicd-pipeline-container || true
 
       # Step 3: Run the new Docker container
-      - name: Run Docker container
-        run: sudo docker run -d -p 8888:8080 --name cicd-pipeline-container abhi96k/cicd-pipeline:latest
+      run: sudo docker run -d -p 8888:8080 --name cicd-pipeline-container abhi96k/cicd-pipeline:latest
