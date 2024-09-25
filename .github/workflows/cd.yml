@@ -2,7 +2,7 @@ name: CD Pipeline
 
 on:
   workflow_run:
-    workflows: ["CI Pipeline"]
+    workflows: ["Docker Image CI"] # This must match the name in ci.yml
     types:
       - completed
 
@@ -11,11 +11,14 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      # Step 1: Pull the Docker image
       - name: Pull Docker image
         run: sudo docker pull abhi96k/cicd-pipeline:latest
 
+      # Step 2: Delete the old Docker container (if exists)
       - name: Delete old Docker container
         run: sudo docker rm -f cicd-pipeline-container || true
 
+      # Step 3: Run the new Docker container
       - name: Run Docker container
         run: sudo docker run -d -p 8888:8080 --name cicd-pipeline-container abhi96k/cicd-pipeline:latest
